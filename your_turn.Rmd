@@ -1,7 +1,9 @@
 ---
-title: "YOUR TURN! UPDATE THIS TITLE."
-author: "Your name"
+title: "Physiology of `r params$pick_species` Penguins "
+author: "Minnie"
 output: html_document
+params:
+  pick_species: Gentoo
 ---
 
 ### Your job: create a parameterized report using data from `penguins.csv`. 
@@ -15,5 +17,21 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+
+penguins <- read_csv("penguins.csv")
+
 ```
+You have chosen to examine penguin species: `r params$pick_species`
+
+
+```{r}
+penguin_subset <- penguins %>% 
+  filter(species == params$pick_species)
+
+ggplot(data=penguin_subset) +
+  geom_point(aes(x=flipper_length_mm, y=body_mass_g, color = island, size = species)) +
+  labs(x = "Flipper Length(mm)", y = "Body Mass (g)", color = "Island")
+```
+
 
